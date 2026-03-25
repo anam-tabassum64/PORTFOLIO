@@ -30,7 +30,7 @@ const Hero = () => {
       <section
         id="top"
         className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-20"
-        style={{ background: '#f0ebe1' }}
+        style={{ background: 'transparent' }}
       >
         {/* ── Subtle radial glow top-center ── */}
         <div

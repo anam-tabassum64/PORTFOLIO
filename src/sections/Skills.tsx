@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import EditorialSectionHeader from '@/components/EditorialSectionHeader';
 
 // ─── Tech icon SVGs (inline, matching reference style) ──────────────────────
 const TechIcon = ({ name }) => {
@@ -7,147 +8,147 @@ const TechIcon = ({ name }) => {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2C9.2 2 7 3.1 7 5v3h5v1H5.5C3.6 9 2 10.8 2 13s1.6 4 3.5 4H5v-3c0-1.9 2.2-3 5-3s5 1.1 5 3v5c0 1.9-2.2 3-5 3s-5-1.1-5-3v-1H3c-1.1 0-1-1-1-1v-2" />
         <path d="M12 22c2.8 0 5-1.1 5-3v-3h-5v-1h6.5c1.9 0 3.5-1.8 3.5-4s-1.6-4-3.5-4H19v3c0 1.9-2.2 3-5 3" />
-        <circle cx="9.5" cy="5.5" r="0.8" fill="currentColor" stroke="none"/>
-        <circle cx="14.5" cy="18.5" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="9.5" cy="5.5" r="0.8" fill="currentColor" stroke="none" />
+        <circle cx="14.5" cy="18.5" r="0.8" fill="currentColor" stroke="none" />
       </svg>
     ),
     'Node.js': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L3 7v10l9 5 9-5V7L12 2z"/>
-        <path d="M12 12v5M12 12L7.5 9.5M12 12l4.5-2.5"/>
+        <path d="M12 2L3 7v10l9 5 9-5V7L12 2z" />
+        <path d="M12 12v5M12 12L7.5 9.5M12 12l4.5-2.5" />
       </svg>
     ),
     'REST APIs': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 6h16M4 12h10M4 18h7"/>
-        <circle cx="18" cy="15" r="4"/>
-        <path d="M18 13v2l1.5 1.5"/>
+        <path d="M4 6h16M4 12h10M4 18h7" />
+        <circle cx="18" cy="15" r="4" />
+        <path d="M18 13v2l1.5 1.5" />
       </svg>
     ),
     Django: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="3"/>
-        <path d="M8 7h2v10H8zM12 7h4v2h-4zM12 11h3v2h-3zM12 15h2.5"/>
+        <rect x="3" y="3" width="18" height="18" rx="3" />
+        <path d="M8 7h2v10H8zM12 7h4v2h-4zM12 11h3v2h-3zM12 15h2.5" />
       </svg>
     ),
     FastAPI: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H13L13 2z"/>
+        <path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H13L13 2z" />
       </svg>
     ),
     TensorFlow: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2v20M5 5.8l7-3.8 7 3.8M5 12l7-3.8M12 8.2L19 12M5 18.2l7-3.8 7 3.8"/>
+        <path d="M12 2v20M5 5.8l7-3.8 7 3.8M5 12l7-3.8M12 8.2L19 12M5 18.2l7-3.8 7 3.8" />
       </svg>
     ),
     Pandas: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="4" height="18" rx="1"/>
-        <rect x="10" y="3" width="4" height="18" rx="1"/>
-        <rect x="17" y="3" width="4" height="18" rx="1"/>
+        <rect x="3" y="3" width="4" height="18" rx="1" />
+        <rect x="10" y="3" width="4" height="18" rx="1" />
+        <rect x="17" y="3" width="4" height="18" rx="1" />
       </svg>
     ),
     'Scikit-learn': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3"/>
-        <circle cx="5" cy="7" r="2"/>
-        <circle cx="19" cy="7" r="2"/>
-        <circle cx="19" cy="17" r="2"/>
-        <circle cx="5" cy="17" r="2"/>
-        <path d="M7 7l3.5 3.5M14.5 10.5L17 7M17 17l-2.5-2.5M7 17l2.5-2.5"/>
+        <circle cx="12" cy="12" r="3" />
+        <circle cx="5" cy="7" r="2" />
+        <circle cx="19" cy="7" r="2" />
+        <circle cx="19" cy="17" r="2" />
+        <circle cx="5" cy="17" r="2" />
+        <path d="M7 7l3.5 3.5M14.5 10.5L17 7M17 17l-2.5-2.5M7 17l2.5-2.5" />
       </svg>
     ),
     NumPy: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 6l9-4 9 4v8l-9 4-9-4V6z"/>
-        <path d="M3 6l9 4 9-4"/>
-        <path d="M12 10v8"/>
+        <path d="M3 6l9-4 9 4v8l-9 4-9-4V6z" />
+        <path d="M3 6l9 4 9-4" />
+        <path d="M12 10v8" />
       </svg>
     ),
     Matplotlib: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 20h18M3 20V4"/>
-        <path d="M5 15l4-5 4 3 5-7"/>
-        <circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none"/>
-        <circle cx="13" cy="13" r="1.2" fill="currentColor" stroke="none"/>
+        <path d="M3 20h18M3 20V4" />
+        <path d="M5 15l4-5 4 3 5-7" />
+        <circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="13" cy="13" r="1.2" fill="currentColor" stroke="none" />
       </svg>
     ),
     React: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(0 12 12)"/>
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/>
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/>
-        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(0 12 12)" />
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)" />
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)" />
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
       </svg>
     ),
     JavaScript: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M8 16.5c0 1 .7 1.5 1.5 1.5s1.5-.5 1.5-2v-5"/>
-        <path d="M15 11.5c-.5-.5-1-.5-1.5-.5-1 0-1.5.7-1.5 1.5s.5 1 1.5 1.5 1.5.8 1.5 1.7c0 1-.7 1.3-1.5 1.3s-1.2-.3-1.5-.8"/>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M8 16.5c0 1 .7 1.5 1.5 1.5s1.5-.5 1.5-2v-5" />
+        <path d="M15 11.5c-.5-.5-1-.5-1.5-.5-1 0-1.5.7-1.5 1.5s.5 1 1.5 1.5 1.5.8 1.5 1.7c0 1-.7 1.3-1.5 1.3s-1.2-.3-1.5-.8" />
       </svg>
     ),
     'HTML/CSS': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 3l1.6 16L12 21l6.4-2L20 3H4z"/>
-        <path d="M16 8H8l.3 3h7.4l-.5 5L12 17l-3.2-.9-.2-2.5"/>
+        <path d="M4 3l1.6 16L12 21l6.4-2L20 3H4z" />
+        <path d="M16 8H8l.3 3h7.4l-.5 5L12 17l-3.2-.9-.2-2.5" />
       </svg>
     ),
     TypeScript: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M7 9h10M12 9v8"/>
-        <path d="M14.5 15c.3.8 1 1 1.5 1s1.5-.4 1.5-1.5-.8-1.3-1.5-1.5-1.5-.7-1.5-1.5.5-1.5 1.5-1.5 1.2.3 1.4.8"/>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M7 9h10M12 9v8" />
+        <path d="M14.5 15c.3.8 1 1 1.5 1s1.5-.4 1.5-1.5-.8-1.3-1.5-1.5-1.5-.7-1.5-1.5.5-1.5 1.5-1.5 1.2.3 1.4.8" />
       </svg>
     ),
     'Next.js': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="9"/>
-        <path d="M9 9l7 7"/>
-        <path d="M9 16V9h2"/>
-        <path d="M15 9v4"/>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9 9l7 7" />
+        <path d="M9 16V9h2" />
+        <path d="M15 9v4" />
       </svg>
     ),
     'Git & GitHub': (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="7" cy="7" r="2"/>
-        <circle cx="7" cy="17" r="2"/>
-        <circle cx="17" cy="7" r="2"/>
-        <path d="M7 9v6M9 7h5a3 3 0 0 1 3 3v0"/>
+        <circle cx="7" cy="7" r="2" />
+        <circle cx="7" cy="17" r="2" />
+        <circle cx="17" cy="7" r="2" />
+        <path d="M7 9v6M9 7h5a3 3 0 0 1 3 3v0" />
       </svg>
     ),
     PostgreSQL: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <ellipse cx="12" cy="6" rx="8" ry="3"/>
-        <path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
-        <path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
-        <path d="M4 14v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
+        <ellipse cx="12" cy="6" rx="8" ry="3" />
+        <path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
+        <path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" />
+        <path d="M4 14v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" />
       </svg>
     ),
     MongoDB: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2c0 0-6 6-6 12a6 6 0 0 0 12 0C18 8 12 2 12 2z"/>
-        <path d="M12 22V12"/>
+        <path d="M12 2c0 0-6 6-6 12a6 6 0 0 0 12 0C18 8 12 2 12 2z" />
+        <path d="M12 22V12" />
       </svg>
     ),
     Docker: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 12.5c-.4-2.4-2.4-3.5-4-3.5H18v-2h-3v2h-3v-2H9v2H6v-2H3v4h.8C3 14 2.9 19 8 19h8c3 0 5-2 5.5-4.5"/>
-        <path d="M7 13h2M11 13h2M15 13h2"/>
+        <path d="M22 12.5c-.4-2.4-2.4-3.5-4-3.5H18v-2h-3v2h-3v-2H9v2H6v-2H3v4h.8C3 14 2.9 19 8 19h8c3 0 5-2 5.5-4.5" />
+        <path d="M7 13h2M11 13h2M15 13h2" />
       </svg>
     ),
     Linux: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2C8 2 6 6 6 10v4l-2 4h16l-2-4v-4c0-4-2-8-6-8z"/>
-        <path d="M9 10h.01M15 10h.01"/>
-        <path d="M9 15c1 1 5 1 6 0"/>
-        <path d="M8 22l1-4M16 22l-1-4"/>
+        <path d="M12 2C8 2 6 6 6 10v4l-2 4h16l-2-4v-4c0-4-2-8-6-8z" />
+        <path d="M9 10h.01M15 10h.01" />
+        <path d="M9 15c1 1 5 1 6 0" />
+        <path d="M8 22l1-4M16 22l-1-4" />
       </svg>
     ),
   };
   return icons[name] || (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/>
+      <circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 3" />
     </svg>
   );
 };
@@ -159,9 +160,9 @@ const skillsData = [
     label: '01',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-        <path d="M7 8l3 3-3 3M13 14h4"/>
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+        <path d="M7 8l3 3-3 3M13 14h4" />
       </svg>
     ),
     skills: ['Python', 'Node.js', 'REST APIs', 'Django', 'FastAPI'],
@@ -172,11 +173,11 @@ const skillsData = [
     label: '02',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
-        <path d="M3 20h18M3 20V4M7 16l4-6 4 4 4-8"/>
-        <circle cx="7" cy="16" r="1.3" fill="currentColor" stroke="none"/>
-        <circle cx="11" cy="10" r="1.3" fill="currentColor" stroke="none"/>
-        <circle cx="15" cy="14" r="1.3" fill="currentColor" stroke="none"/>
-        <circle cx="19" cy="6" r="1.3" fill="currentColor" stroke="none"/>
+        <path d="M3 20h18M3 20V4M7 16l4-6 4 4 4-8" />
+        <circle cx="7" cy="16" r="1.3" fill="currentColor" stroke="none" />
+        <circle cx="11" cy="10" r="1.3" fill="currentColor" stroke="none" />
+        <circle cx="15" cy="14" r="1.3" fill="currentColor" stroke="none" />
+        <circle cx="19" cy="6" r="1.3" fill="currentColor" stroke="none" />
       </svg>
     ),
     skills: ['TensorFlow', 'Pandas', 'Scikit-learn', 'NumPy', 'Matplotlib'],
@@ -187,9 +188,9 @@ const skillsData = [
     label: '03',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
-        <polyline points="16 18 22 12 16 6"/>
-        <polyline points="8 6 2 12 8 18"/>
-        <line x1="12" y1="4" x2="12" y2="20"/>
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+        <line x1="12" y1="4" x2="12" y2="20" />
       </svg>
     ),
     skills: ['React', 'JavaScript', 'HTML/CSS', 'TypeScript', 'Next.js'],
@@ -200,10 +201,10 @@ const skillsData = [
     label: '04',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
-        <ellipse cx="12" cy="5" rx="9" ry="3"/>
-        <path d="M3 5v5c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-        <path d="M3 10v5c0 1.66 4.03 3 9 3s9-1.34 9-3v-5"/>
-        <path d="M3 15v4c0 1.66 4.03 3 9 3s9-1.34 9-3v-4"/>
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5v5c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+        <path d="M3 10v5c0 1.66 4.03 3 9 3s9-1.34 9-3v-5" />
+        <path d="M3 15v4c0 1.66 4.03 3 9 3s9-1.34 9-3v-4" />
       </svg>
     ),
     skills: ['Git & GitHub', 'PostgreSQL', 'MongoDB', 'Docker', 'Linux'],
@@ -475,10 +476,9 @@ const SectionHeader = () => {
         fontStyle: 'italic',
         color: '#9a7040',
         lineHeight: 1.65,
-        maxWidth: '560px',
+        maxWidth: '100%',
       }}>
-        A curated set of tools and technologies I use to build intelligent,{' '}
-        data-driven solutions.
+        Curated tools for intelligent, data-driven solutions.
       </p>
 
       <div style={{
@@ -587,7 +587,14 @@ const Skills = () => {
         position: 'relative',
         zIndex: 1,
       }}>
-        <SectionHeader />
+        <EditorialSectionHeader
+          number="01"
+          eyebrow="Technical Expertise"
+          title="Skills"
+          accent="toolkit"
+          description="Curated tools for intelligent, data-driven solutions."
+          className="mx-auto max-w-[700px] -mt-6"
+        />
 
         {/* Cards */}
         <div

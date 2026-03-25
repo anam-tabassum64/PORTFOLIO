@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Github, Linkedin, LoaderCircle, Mail, MapPin, SendHorizonal } from 'lucide-react';
-import SectionHeader from '@/components/SectionHeader';
+import EditorialSectionHeader from '@/components/EditorialSectionHeader';
 import { profile } from '@/content/portfolio';
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -17,11 +17,13 @@ const initialForm = {
 const Contact = () => {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus('loading');
     setError('');
+    setSuccessMessage('');
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -44,8 +46,12 @@ const Contact = () => {
       }
 
       form.reset();
+      setSuccessMessage(payload.message || 'Your message was submitted successfully.');
       setStatus('success');
-      window.setTimeout(() => setStatus('idle'), 5000);
+      window.setTimeout(() => {
+        setStatus('idle');
+        setSuccessMessage('');
+      }, 5000);
     } catch (submitError) {
       setStatus('error');
       setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
@@ -55,11 +61,13 @@ const Contact = () => {
   return (
     <section id="contact" className="section-padding">
       <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          overline="Contact"
-          title="A contact section that is ready for real inquiries"
-          description="The form now supports backend validation and optional email delivery. Add the required credentials before deploying so messages do not disappear into a demo-only setup."
-          align="center"
+        <EditorialSectionHeader
+          number="06"
+          eyebrow="Contact"
+          title="Reach out"
+          accent="directly"
+          description="Messages route through the backend so inquiries can reach your inbox properly."
+          className="mb-12"
         />
 
         <div className="grid gap-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)]">
@@ -91,7 +99,7 @@ const Contact = () => {
             </div>
 
             <div className="mt-10 rounded-[24px] bg-white/10 p-5 text-sm leading-relaxed text-olive-100">
-              For production, configure either MongoDB, SMTP, or both on the backend. SMTP is recommended so inquiries also reach your inbox immediately.
+              SMTP should be configured in production so inquiries land in your inbox immediately and each sender receives an automatic thank-you confirmation.
             </div>
 
             <div className="mt-8 flex gap-3">
@@ -186,7 +194,7 @@ const Contact = () => {
             {status === 'success' && (
               <div className="mt-5 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                 <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
-                <span>Your message was submitted successfully.</span>
+                <span>{successMessage || 'Your message was submitted successfully.'}</span>
               </div>
             )}
 

@@ -1,21 +1,26 @@
 import Navbar from '@/components/Navbar';
+import FloatingSocialRail from '@/components/FloatingSocialRail';
 import Hero from '@/sections/Hero';
 import About from '@/sections/About';
 import Skills from '@/sections/Skills';
 import Projects from '@/sections/Projects';
-import Experience from '@/sections/Experience';
+
+import Certificates from '@/sections/Certificates';
+import Resume from '@/sections/Resume';
 import Contact from '@/sections/Contact';
 import Footer from '@/sections/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-olive-50">
+    <div className="site-shell min-h-screen">
       <Navbar />
+      <FloatingSocialRail />
       <Hero />
       <About />
       <Skills />
       <Projects />
-      <Experience />
+      <Certificates />
+      <Resume />
       <Contact />
       <Footer />
     </div>

@@ -16,7 +16,7 @@ const About = () => {
     <section
       id="about"
       style={{
-        background: 'linear-gradient(135deg, #efe9de 0%, #f6f1e8 48%, #ece2d3 100%)',
+        background: 'transparent',
         padding: '88px 20px 44px',
         position: 'relative',
         overflow: 'hidden',
@@ -25,16 +25,6 @@ const About = () => {
         alignItems: 'center',
       }}
     >
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(circle at 20% 20%, rgba(212,170,112,0.14), transparent 30%), radial-gradient(circle at 85% 25%, rgba(212,170,112,0.12), transparent 24%), radial-gradient(circle at 70% 75%, rgba(160,132,74,0.08), transparent 28%)',
-          pointerEvents: 'none',
-        }}
-      />
-
       <div
         style={{
           maxWidth: '1240px',
@@ -207,17 +197,17 @@ const About = () => {
               alignItems: 'center',
               gap: '12px',
             }}
-            >
-              <span
-                style={{
-                  width: '9px',
-                  height: '9px',
+          >
+            <span
+              style={{
+                width: '9px',
+                height: '9px',
                 borderRadius: '999px',
                 background: '#b08949',
                 display: 'inline-block',
               }}
-              />
-              Available for internships &amp; collaborations
+            />
+            Available for internships &amp; collaborations
           </div>
 
           <div

@@ -68,6 +68,18 @@ npm run dev:full
   - Inbox where portfolio messages should arrive
 - `CONTACT_FROM_EMAIL`
   - Verified sender email used by the SMTP provider
+- `PORTFOLIO_NAME`
+  - Brand name shown in outgoing emails
+- `PORTFOLIO_OWNER_NAME`
+  - Name used in the thank-you reply
+- `PORTFOLIO_OWNER_ROLE`
+  - Role line shown in the thank-you reply
+- `PORTFOLIO_LOCATION`
+  - Location shown in the thank-you reply
+- `PORTFOLIO_EMAIL`
+  - Contact email shown in the thank-you reply
+- `PORTFOLIO_SITE_URL`
+  - Website URL shown in the thank-you reply
 
 ## How to get the credentials
 
@@ -129,6 +141,9 @@ Notes:
 - `company` is a hidden honeypot field and should stay empty
 - The backend rate-limits repeated submissions
 - If both MongoDB and SMTP are missing, the endpoint returns `503`
+- When SMTP is configured, the backend sends two emails:
+  - A styled notification to `CONTACT_TO_EMAIL`
+  - A styled thank-you auto-reply to the sender
 
 ## Deployment
 
