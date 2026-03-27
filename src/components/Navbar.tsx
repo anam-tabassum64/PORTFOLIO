@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
 import { profile } from '@/content/portfolio';
+import brandLogo from '../../logo.png';
 
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'Education', href: '#education' },
+  { label: 'Certificates', href: '#certificates' },
+  { label: 'CV', href: '#resume' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -15,7 +18,7 @@ const navLinks = [
 const ActiveDot = () => (
   <motion.span
     layoutId="nav-dot"
-    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-[#8a6c3e]"
+    className="pointer-events-none absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-[#8a6c3e]"
     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
   />
 );
@@ -23,7 +26,7 @@ const ActiveDot = () => (
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState('#about');
 
   /* scroll → glass effect */
   useEffect(() => {
@@ -32,17 +35,43 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* intersection observer → highlight active section */
+  /* scroll spy → highlight active section */
   useEffect(() => {
-    const ids = navLinks.map(l => l.href.slice(1));
-    const obs = new IntersectionObserver(
-      entries => {
-        entries.forEach(e => { if (e.isIntersecting) setActiveLink('#' + e.target.id); });
-      },
-      { rootMargin: '-40% 0px -55% 0px' }
-    );
-    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    return () => obs.disconnect();
+    const ids = navLinks.map((link) => link.href.slice(1));
+    let ticking = false;
+
+    const updateActiveLink = () => {
+      const marker = window.scrollY + 140;
+      let currentHref = `#${ids[0]}`;
+
+      for (const id of ids) {
+        const section = document.getElementById(id);
+        if (!section) continue;
+        if (section.offsetTop <= marker) {
+          currentHref = `#${id}`;
+        }
+      }
+
+      setActiveLink((prev) => (prev === currentHref ? prev : currentHref));
+    };
+
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActiveLink();
+        ticking = false;
+      });
+    };
+
+    updateActiveLink();
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
+    };
   }, []);
 
   const firstName = profile?.name?.split(' ')[0] ?? 'Portfolio';
@@ -76,42 +105,97 @@ const Navbar = () => {
           transition: 'background 0.5s',
         }} />
 
-        <div style={{
+        <div
+          className="nav-shell"
+          style={{
           maxWidth: '1280px', margin: '0 auto',
           padding: '0 32px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'flex-start',
           height: '72px',
           fontFamily: "'DM Sans', sans-serif",
-        }}>
+          }}
+        >
 
           {/* ── Logo ── */}
-          <a href="#top" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: '1px' }}>
-            <span style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '22px', fontWeight: 700,
-              color: '#2a1f10', letterSpacing: '-0.02em',
-            }}>
-              {firstName}
+          <a
+            href="#top"
+            className="nav-brand"
+            style={{
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              flexShrink: 0,
+            }}
+          >
+            <span
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '999px',
+                overflow: 'hidden',
+                border: '1px solid rgba(138,108,62,0.35)',
+                boxShadow: '0 4px 12px rgba(58,44,26,0.16)',
+                flexShrink: 0,
+              }}
+            >
+              <img
+                src={brandLogo}
+                alt={`${firstName} logo`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
             </span>
-            <span style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '28px', fontWeight: 700,
-              color: '#a0844a', lineHeight: 1,
-            }}>.</span>
-            {/* small tagline beside logo */}
-            <span style={{
-              marginLeft: '10px',
-              fontSize: '10px', fontWeight: 500,
-              letterSpacing: '0.18em', textTransform: 'uppercase',
-              color: '#a0844a', opacity: 0.7,
-              alignSelf: 'center',
-            }}>
-              Portfolio
+            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '10px', transform: 'translateY(1px)' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '1px' }}>
+                <span
+                  className="nav-brand-name"
+                  style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '22px', fontWeight: 700,
+                  color: '#2a1f10', letterSpacing: '-0.02em',
+                  }}
+                >
+                  {firstName}
+                </span>
+                <span style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '28px', fontWeight: 700,
+                  color: '#a0844a', lineHeight: 1,
+                }}>.</span>
+              </span>
+              {/* small tagline beside logo */}
+              <span
+                className="nav-brand-tag"
+                style={{
+                fontSize: '10px', fontWeight: 500,
+                letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: '#a0844a', opacity: 0.7,
+                lineHeight: 1,
+                alignSelf: 'baseline',
+                paddingBottom: '2px',
+                }}
+              >
+                Portfolio
+              </span>
             </span>
           </a>
 
           {/* ── Desktop Links ── */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }} className="hidden-mobile">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginLeft: 'auto',
+              flexShrink: 0,
+            }}
+            className="hidden-mobile"
+          >
             {navLinks.map(link => {
               const isActive = activeLink === link.href;
               return (
@@ -170,7 +254,7 @@ const Navbar = () => {
               }}
             >
               <Download size={12} strokeWidth={2.2} />
-              Resume
+              CV
             </a>
 
             {/* CTA pill */}
@@ -210,6 +294,7 @@ const Navbar = () => {
             onClick={() => setMobileOpen(o => !o)}
             style={{
               display: 'none',
+              marginLeft: 'auto',
               background: 'rgba(197,168,118,0.15)',
               border: '1px solid rgba(138,108,62,0.25)',
               borderRadius: '10px',
@@ -232,6 +317,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22 }}
+              className="nav-mobile-drawer"
               style={{
                 background: 'rgba(240,235,225,0.96)',
                 backdropFilter: 'blur(20px)',
@@ -285,7 +371,7 @@ const Navbar = () => {
                   }}
                 >
 
-                  <Download size={13} /> Resume
+                  <Download size={13} /> CV
                 </a>
                 <a
                   href="#contact"
@@ -309,11 +395,36 @@ const Navbar = () => {
 
       {/* ── Responsive helpers ── */}
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1360px) {
+          .nav-shell { padding: 0 22px !important; }
+        }
+        @media (max-width: 1100px) {
           .hidden-mobile { display: none !important; }
           .show-mobile   { display: flex !important; }
+          .nav-shell {
+            padding: 0 16px !important;
+            height: 66px !important;
+          }
+          .nav-brand-tag { display: none !important; }
         }
-        @media (min-width: 769px) {
+        @media (max-width: 620px) {
+          .nav-shell {
+            padding: 0 12px !important;
+            height: 62px !important;
+          }
+          .nav-brand-name { font-size: 19px !important; }
+          .nav-mobile-drawer {
+            max-height: calc(100svh - 62px);
+            overflow-y: auto;
+          }
+        }
+        @media (max-width: 420px) {
+          .nav-brand {
+            gap: 7px !important;
+          }
+          .nav-brand-name { font-size: 17px !important; }
+        }
+        @media (min-width: 1101px) {
           .show-mobile { display: none !important; }
         }
       `}</style>

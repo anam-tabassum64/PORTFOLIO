@@ -100,29 +100,66 @@ export const projects = [
   },
 ];
 
+export const certificates: Array<{
+  title: string;
+  issuer: string;
+  year: string;
+  summary: string;
+  skills: string[];
+  link?: string;
+}> = [
+  {
+    title: "GenAI Powered Data Analytics Job Simulation",
+    issuer: "Tata",
+    year: "2025",
+    summary:
+      "Completed a practical simulation focused on AI-assisted analytics workflows, business problem solving, and turning data findings into decision-ready insights.",
+    skills: ["GenAI", "Analytics", "Business Insights"],
+    link: "https://drive.google.com/file/d/1I3Ng1K3cRghVKLrCLNCglfoTiVdlcCx8/view?usp=sharing",
+  },
+  {
+    title: "Cloud Computing",
+    issuer: "NPTEL",
+    year: "2025",
+    summary:
+      "Completed NPTEL Cloud Computing coursework covering cloud service models, virtualization, distributed systems foundations, and scalable cloud architecture concepts.",
+    skills: ["Cloud Computing", "Virtualization", "Distributed Systems"],
+    link: "https://drive.google.com/file/d/1Lx_C0WiR5uHeZ3aN_efEDYDOohF5R6BS/view?usp=sharing",
+  },
+  {
+    title: "Introduction to Hardware and Operating Systems",
+    issuer: "Coursera",
+    year: "2024",
+    summary:
+      "Built foundational understanding of computer hardware, operating system concepts, system components, and how software interacts with underlying machines.",
+    skills: ["Hardware", "Operating Systems", "Systems"],
+    link: "https://drive.google.com/file/d/19xMhXPuNeIUi_6lgKl85KDQiraf2RCK5/view?usp=sharing",
+  },
+  {
+    title: "Responsive Web Design",
+    issuer: "freeCodeCamp",
+    year: "2025",
+    summary:
+      "Completed hands-on training in responsive layouts, semantic HTML, CSS styling, and accessible interface construction for modern web experiences.",
+    skills: ["HTML", "CSS", "Responsive Design"],
+    link: "https://drive.google.com/file/d/1nhxpWAEUx2E16m1O9bXYBdmELKQQg8ZN/view?usp=sharing",
+  },
+];
+
 export const timeline = [
   {
-    title: "B.Tech in Computer Science and Engineering",
-    meta: "Lovely Professional University • 2023 - Present",
-    description:
-      "Building fundamentals in DSA, DBMS, operating systems, computer networks, and applied machine learning.",
+    title: "Bachelor of Technology in Computer Science and Engineering",
+    meta: "Lovely Professional University • Phagwara, Punjab • 2023 - Present",
+    description: "CGPA: 7.3",
   },
   {
-    title: "Data Science Training",
-    meta: "Lovely Professional University • 2025",
-    description:
-      "Worked through SQL, Excel, Power BI, Python, data cleaning, exploratory analysis, and ML basics.",
+    title: "Intermediate",
+    meta: "Sri Chaitanya Junior College • Hyderabad, Telangana • 2021 - 2023",
+    description: "Percentage: 93.2%",
   },
   {
-    title: "Hackathon Recognition",
-    meta: "Coding Wise and Coding Blocks • 2024",
-    description:
-      "Placed in the top 5 in Code Off Duty and top 10 in Arena through practical web project work.",
-  },
-  {
-    title: "Certifications and Simulations",
-    meta: "Tata, Oracle, Coursera, freeCodeCamp • 2024 - 2025",
-    description:
-      "Completed learning tracks in data analytics, cloud fundamentals, hardware, operating systems, and responsive web design.",
+    title: "Matriculation",
+    meta: "Bhagavathi E/M High School • Karimnagar, Telangana • 2020 - 2021",
+    description: "Percentage: 95%",
   },
 ];

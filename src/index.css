@@ -38,10 +38,35 @@
 
   body {
     @apply bg-olive-50 font-sans text-olive-700 antialiased;
-    background-image:
-      linear-gradient(to bottom, rgba(247, 243, 237, 0.92), rgba(247, 243, 237, 0.98)),
-      radial-gradient(circle at top, rgba(210, 184, 147, 0.22), transparent 30%);
+    background: #faf7f1;
     min-width: 320px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  #root {
+    position: relative;
+    isolation: isolate;
+  }
+
+  section,
+  footer {
+    position: relative;
+  }
+
+  section[id] {
+    scroll-margin-top: 88px;
+  }
+
+  section::before,
+  footer::before {
+    content: none;
+  }
+
+  section > *,
+  footer > * {
+    position: relative;
+    z-index: 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -55,7 +80,7 @@
 
 @layer components {
   .section-padding {
-    @apply flex min-h-screen items-center px-6 py-20 lg:px-24 lg:py-28;
+    @apply px-4 py-12 sm:px-6 sm:py-14 lg:px-16 lg:py-16 xl:px-24;
   }
 
   .overline {
@@ -64,6 +89,12 @@
 
   .glass-nav {
     @apply border-b border-olive-200/70 bg-olive-50/80 backdrop-blur-xl;
+  }
+
+  .site-shell {
+    position: relative;
+    z-index: 1;
+    background: #faf7f1;
   }
 }
 

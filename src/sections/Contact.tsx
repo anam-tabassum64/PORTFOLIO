@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Github, Linkedin, LoaderCircle, Mail, MapPin, SendHorizonal } from 'lucide-react';
-import SectionHeader from '@/components/SectionHeader';
+import { CheckCircle2, Github, Linkedin, LoaderCircle, Mail, MapPin, Phone, SendHorizonal } from 'lucide-react';
+import EditorialSectionHeader from '@/components/EditorialSectionHeader';
 import { profile } from '@/content/portfolio';
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -9,7 +9,7 @@ type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 const initialForm = {
   name: '',
   email: '',
-  subject: '',
+  subject: 'Portfolio Inquiry',
   message: '',
   company: '',
 };
@@ -17,11 +17,24 @@ const initialForm = {
 const Contact = () => {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [phoneCopied, setPhoneCopied] = useState(false);
+
+  const copyPhoneNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.phone);
+      setPhoneCopied(true);
+      window.setTimeout(() => setPhoneCopied(false), 1500);
+    } catch {
+      setPhoneCopied(false);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus('loading');
     setError('');
+    setSuccessMessage('');
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -44,8 +57,12 @@ const Contact = () => {
       }
 
       form.reset();
+      setSuccessMessage(payload.message || 'Your message was submitted successfully.');
       setStatus('success');
-      window.setTimeout(() => setStatus('idle'), 5000);
+      window.setTimeout(() => {
+        setStatus('idle');
+        setSuccessMessage('');
+      }, 5000);
     } catch (submitError) {
       setStatus('error');
       setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
@@ -55,20 +72,21 @@ const Contact = () => {
   return (
     <section id="contact" className="section-padding">
       <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          overline="Contact"
-          title="A contact section that is ready for real inquiries"
-          description="The form now supports backend validation and optional email delivery. Add the required credentials before deploying so messages do not disappear into a demo-only setup."
-          align="center"
+        <EditorialSectionHeader
+          number="06"
+          eyebrow="Contact"
+          title="Contact"
+          description="Messages route through the backend so inquiries can reach your inbox properly."
+          className="mb-8 lg:mb-12"
         />
 
-        <div className="grid gap-8 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)]">
+        <div className="grid gap-6 lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:gap-8">
           <motion.aside
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55 }}
-            className="rounded-[30px] bg-olive-700 p-8 text-olive-50"
+            className="rounded-[26px] bg-olive-700 p-6 text-olive-50 sm:rounded-[30px] sm:p-8"
           >
             <p className="text-xs uppercase tracking-[0.22em] text-olive-200">Direct details</p>
             <div className="mt-8 space-y-6">
@@ -91,7 +109,8 @@ const Contact = () => {
             </div>
 
             <div className="mt-10 rounded-[24px] bg-white/10 p-5 text-sm leading-relaxed text-olive-100">
-              For production, configure either MongoDB, SMTP, or both on the backend. SMTP is recommended so inquiries also reach your inbox immediately.
+              I usually reply within 24 hours. Share your project idea, timeline, and goals, and I can help with
+              backend development, data workflows, and production-ready implementation.
             </div>
 
             <div className="mt-8 flex gap-3">
@@ -104,6 +123,20 @@ const Contact = () => {
               <a href={profile.links.email} className="rounded-full bg-white/10 p-3 transition hover:bg-white/20">
                 <Mail size={18} />
               </a>
+              <span className="relative inline-flex">
+                <button
+                  type="button"
+                  onClick={copyPhoneNumber}
+                  aria-label="Copy phone number"
+                  title="Copy phone number"
+                  className="peer cursor-pointer rounded-full bg-white/10 p-3 transition hover:bg-white/20"
+                >
+                  <Phone size={18} />
+                </button>
+                <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/35 bg-white/90 px-3 py-1 font-syne text-[10px] font-bold uppercase tracking-[0.14em] text-olive-700 opacity-0 shadow-[0_8px_20px_rgba(0,0,0,0.2)] transition-opacity duration-200 peer-hover:opacity-100 peer-focus-visible:opacity-100">
+                  {phoneCopied ? 'Copied' : profile.phone}
+                </span>
+              </span>
             </div>
           </motion.aside>
 
@@ -112,10 +145,11 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ delay: 0.08, duration: 0.55 }}
-            className="rounded-[30px] border border-olive-200 bg-white p-8 shadow-[0_30px_80px_-55px_rgba(108,82,45,0.7)]"
+            className="rounded-[26px] border border-olive-200 bg-white p-6 shadow-[0_30px_80px_-55px_rgba(108,82,45,0.7)] sm:rounded-[30px] sm:p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-5">
               <input type="text" name="company" defaultValue={initialForm.company} className="hidden" tabIndex={-1} autoComplete="off" />
+              <input type="hidden" name="subject" defaultValue={initialForm.subject} />
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-olive-500">Name</span>
@@ -142,18 +176,6 @@ const Contact = () => {
                   />
                 </label>
               </div>
-              <label className="space-y-2">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-olive-500">Subject</span>
-                <input
-                  required
-                  type="text"
-                  name="subject"
-                  defaultValue={initialForm.subject}
-                  maxLength={200}
-                  className="w-full rounded-2xl border border-olive-200 bg-olive-50 px-4 py-3.5 text-olive-700 outline-none transition focus:border-olive-400"
-                  placeholder="What do you want to build?"
-                />
-              </label>
               <label className="space-y-2">
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-olive-500">Message</span>
                 <textarea
@@ -186,7 +208,7 @@ const Contact = () => {
             {status === 'success' && (
               <div className="mt-5 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                 <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
-                <span>Your message was submitted successfully.</span>
+                <span>{successMessage || 'Your message was submitted successfully.'}</span>
               </div>
             )}
 

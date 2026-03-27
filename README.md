@@ -7,12 +7,12 @@ Production-oriented portfolio site for **Anam Tabassum** built with React, TypeS
 - Reworked the portfolio layout to feel cleaner and less template-generated
 - Removed filler sections, decorative cursor effects, and unused shadcn/Supabase/test scaffolding
 - Moved portfolio content into a single source file for easier updates
-- Fixed the backend to run in ESM mode and added validation, spam protection, rate limiting, MongoDB storage, and optional SMTP email delivery
+- Fixed the backend to run in ESM mode and added validation, spam protection, rate limiting, and SMTP email delivery
 
 ## Tech stack
 
 - Frontend: React, TypeScript, Vite, Tailwind CSS, Framer Motion
-- Backend: Node.js, Express, MongoDB, Nodemailer
+- Backend: Node.js, Express, Nodemailer
 
 ## Local development
 
@@ -52,8 +52,6 @@ npm run dev:full
 - `CORS_ORIGIN`
   - Your frontend URL
   - Local example: `http://localhost:8080`
-- `MONGODB_URI`
-  - MongoDB connection string used to store contact messages
 - `SMTP_HOST`
   - Your mail server host
 - `SMTP_PORT`
@@ -68,17 +66,20 @@ npm run dev:full
   - Inbox where portfolio messages should arrive
 - `CONTACT_FROM_EMAIL`
   - Verified sender email used by the SMTP provider
+- `PORTFOLIO_NAME`
+  - Brand name shown in outgoing emails
+- `PORTFOLIO_OWNER_NAME`
+  - Name used in the thank-you reply
+- `PORTFOLIO_OWNER_ROLE`
+  - Role line shown in the thank-you reply
+- `PORTFOLIO_LOCATION`
+  - Location shown in the thank-you reply
+- `PORTFOLIO_EMAIL`
+  - Contact email shown in the thank-you reply
+- `PORTFOLIO_SITE_URL`
+  - Website URL shown in the thank-you reply
 
 ## How to get the credentials
-
-### MongoDB
-
-1. Create an account at MongoDB Atlas.
-2. Create a cluster.
-3. In `Database Access`, create a database user and save the username/password.
-4. In `Network Access`, allow your deployment platform IPs or use `0.0.0.0/0` temporarily.
-5. In `Connect`, choose `Drivers` and copy the connection string.
-6. Replace `<username>`, `<password>`, and database name in `MONGODB_URI`.
 
 ### Gmail SMTP
 
@@ -108,7 +109,7 @@ Use the SMTP settings from your provider dashboard. You need:
 
 ### `GET /health`
 
-Returns current backend status, including whether MongoDB and SMTP are configured.
+Returns current backend status, including whether SMTP is configured.
 
 ### `POST /api/contact`
 
@@ -128,7 +129,10 @@ Notes:
 
 - `company` is a hidden honeypot field and should stay empty
 - The backend rate-limits repeated submissions
-- If both MongoDB and SMTP are missing, the endpoint returns `503`
+- If SMTP credentials are missing, the endpoint returns `503`
+- When SMTP is configured, the backend sends two emails:
+  - A styled notification to `CONTACT_TO_EMAIL`
+  - A styled thank-you auto-reply to the sender
 
 ## Deployment
 
@@ -153,13 +157,13 @@ npm run build
 npm run server
 ```
 
-4. Confirm `GET /health` reports the expected MongoDB and SMTP status.
+4. Confirm `GET /health` reports the expected SMTP status.
 5. Update the frontend `VITE_API_BASE_URL` to the final backend URL.
 
 ## Final checklist before deploying
 
 1. Run `npm install` so the cleaned dependency list is applied.
-2. Fill `.env` or host environment variables with real MongoDB and SMTP values.
+2. Fill `.env` or host environment variables with real SMTP values.
 3. Test `POST /api/contact` locally.
 4. Build the frontend with `npm run build`.
 5. Deploy backend first, then frontend.
