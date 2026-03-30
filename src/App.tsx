@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound.tsx";
 import ResumePreview from "./pages/ResumePreview.tsx";
 
 const App = () => (
-  <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+  <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_relativeSplatPath: true }}>
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/resume-preview" element={<ResumePreview />} />

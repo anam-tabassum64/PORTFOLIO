@@ -4,6 +4,8 @@ import { CheckCircle2, Github, Linkedin, LoaderCircle, Mail, MapPin, Phone, Send
 import EditorialSectionHeader from '@/components/EditorialSectionHeader';
 import { profile } from '@/content/portfolio';
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const initialForm = {
@@ -45,6 +47,10 @@ const Contact = () => {
     const contactEndpoint = configuredApiBase ? `${configuredApiBase}/api/contact` : '/api/contact';
 
     try {
+      if (!emailPattern.test(String(data.email || ''))) {
+        throw new Error('Please enter a valid email address.');
+      }
+
       const response = await fetch(contactEndpoint, {
         method: 'POST',
         headers: {
@@ -53,10 +59,15 @@ const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      const payload = await response.json().catch(() => ({}));
+      let payload = { error: '', message: '' };
+      try {
+        payload = await response.json();
+      } catch {
+        // Fallback for non-JSON or empty responses
+      }
 
       if (!response.ok) {
-        throw new Error(payload.error || 'Failed to send message');
+        throw new Error(payload.error || `Server responded with status ${response.status}`);
       }
 
       form.reset();
@@ -69,10 +80,9 @@ const Contact = () => {
     } catch (submitError) {
       setStatus('error');
       if (submitError instanceof TypeError) {
-        setError('Cannot reach contact API. If testing locally, run `vercel dev` or deploy to Vercel and try again.');
+        setError('Cannot reach contact API. If testing locally, ensure your backend server is running.');
         return;
       }
-
       setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
     }
   };

@@ -9,6 +9,7 @@ import {
   Compass,
   Clock,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import EditorialSectionHeader from '@/components/EditorialSectionHeader';
 import { profile } from '@/content/portfolio';
 
@@ -125,8 +126,8 @@ const Resume = () => {
 
               {/* Buttons */}
               <div className="flex flex-wrap gap-2.5">
-                <a
-                  href="/resume-preview"
+                <Link
+                  to="/resume-preview"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 border border-olive-700 bg-olive-700 px-4 py-3 font-syne text-[9px] font-bold uppercase tracking-[.18em] text-[#f7f3ed] transition-[background,border-color] duration-500 hover:border-olive-500 hover:bg-olive-500 group-hover:border-olive-500 group-hover:bg-olive-500 sm:px-5 sm:tracking-[.2em]"
@@ -134,7 +135,7 @@ const Resume = () => {
                   <Eye size={12} />
                   Preview
                   <ArrowUpRight size={10} />
-                </a>
+                </Link>
                 <a
                   href={profile.resumePath}
                   download={profile.resumeFileName}

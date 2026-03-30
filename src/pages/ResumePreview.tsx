@@ -1,4 +1,5 @@
 import { ExternalLink, Github, Linkedin, Mail, Phone, ArrowLeft, Download, Printer } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { profile, timeline, projects } from '@/content/portfolio';
 
 type ResumeProject = {
@@ -121,13 +122,13 @@ const ResumePreview = () => {
     <main className="min-h-screen bg-[#f7f3ed] text-olive-800">
       <div className="sticky top-0 z-20 border-b border-olive-200/90 bg-[#f7f3ed]/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-3 lg:px-10">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 rounded-full border border-olive-200 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-olive-700 transition hover:border-olive-300 hover:bg-white"
           >
             <ArrowLeft size={14} />
             Back to Portfolio
-          </a>
+          </Link>
           <div className="flex items-center gap-2">
             <button
               type="button"
