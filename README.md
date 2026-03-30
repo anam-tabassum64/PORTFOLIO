@@ -1,18 +1,14 @@
 # Portfolio Website
 
-Production-oriented portfolio site for **Anam Tabassum** built with React, TypeScript, Vite, Tailwind CSS, and a Node/Express contact backend.
+Portfolio site for **Anam Tabassum** built with React, TypeScript, Vite, Tailwind CSS, and a Vercel Serverless Function for contact email delivery.
 
-## What changed
+## Architecture
 
-- Reworked the portfolio layout to feel cleaner and less template-generated
-- Removed filler sections, decorative cursor effects, and unused shadcn/Supabase/test scaffolding
-- Moved portfolio content into a single source file for easier updates
-- Fixed the backend to run in ESM mode and added validation, spam protection, rate limiting, and SMTP email delivery
+- Frontend: Vite + React (static)
+- API: `api/contact.js` (Vercel Serverless Function)
+- Email: Nodemailer + SMTP
 
-## Tech stack
-
-- Frontend: React, TypeScript, Vite, Tailwind CSS, Framer Motion
-- Backend: Node.js, Express, Nodemailer
+This setup deploys in a **single Vercel project**. No separate Render/Railway backend is needed.
 
 ## Local development
 
@@ -22,98 +18,52 @@ Production-oriented portfolio site for **Anam Tabassum** built with React, TypeS
 npm install
 ```
 
-2. Copy the environment file and fill the values:
+2. Create local env file from template:
 
 ```sh
 copy .env.example .env
 ```
 
-3. Start frontend and backend together:
+3. Start frontend:
 
 ```sh
-npm run dev:full
+npm run dev
 ```
 
-4. Open:
+4. Optional local API testing (serverless functions):
 
-- Frontend: `http://localhost:8080`
-- Backend health check: `http://localhost:5000/health`
+```sh
+npx vercel dev
+```
 
-## Required environment variables
+## Environment variables
 
-### Frontend
+Set these in Vercel Project Settings -> Environment Variables:
 
-- `VITE_API_BASE_URL`
-  - The public URL of your backend API
-  - Local example: `http://localhost:5000`
-
-### Backend
-
-- `CORS_ORIGIN`
-  - Your frontend URL
-  - Local example: `http://localhost:8080`
-- `SMTP_HOST`
-  - Your mail server host
-- `SMTP_PORT`
-  - Usually `587` for TLS or `465` for SSL
-- `SMTP_SECURE`
-  - `true` for SSL, `false` for STARTTLS/587
+- `SMTP_HOST` (example: `smtp.gmail.com`)
+- `SMTP_PORT` (example: `587`)
+- `SMTP_SECURE` (`true` for SSL/465, `false` for STARTTLS/587)
 - `SMTP_USER`
-  - SMTP login username
-- `SMTP_PASS`
-  - SMTP password or app password
+- `SMTP_PASS` (Gmail app password if using Gmail)
 - `CONTACT_TO_EMAIL`
-  - Inbox where portfolio messages should arrive
 - `CONTACT_FROM_EMAIL`
-  - Verified sender email used by the SMTP provider
-- `PORTFOLIO_NAME`
-  - Brand name shown in outgoing emails
-- `PORTFOLIO_OWNER_NAME`
-  - Name used in the thank-you reply
-- `PORTFOLIO_OWNER_ROLE`
-  - Role line shown in the thank-you reply
-- `PORTFOLIO_LOCATION`
-  - Location shown in the thank-you reply
-- `PORTFOLIO_EMAIL`
-  - Contact email shown in the thank-you reply
-- `PORTFOLIO_SITE_URL`
-  - Website URL shown in the thank-you reply
+- `ALLOW_DEV_CONTACT_FALLBACK` (`false` in production)
+- `PORTFOLIO_OWNER_NAME` (optional)
+- `PORTFOLIO_OWNER_ROLE` (optional)
+- `PORTFOLIO_EMAIL` (optional)
+- `PORTFOLIO_SITE_URL` (optional)
 
-## How to get the credentials
+Optional frontend variable:
 
-### Gmail SMTP
-
-1. Use a Google account with 2-Step Verification enabled.
-2. Open Google Account settings and search for `App passwords`.
-3. Create an app password for Mail.
-4. Use:
-   - `SMTP_HOST=smtp.gmail.com`
-   - `SMTP_PORT=587`
-   - `SMTP_SECURE=false`
-   - `SMTP_USER=your-gmail-address`
-   - `SMTP_PASS=the-16-character-app-password`
-   - `CONTACT_FROM_EMAIL=your-gmail-address`
-   - `CONTACT_TO_EMAIL=the inbox you want to receive messages in`
-
-### Other mail providers
-
-Use the SMTP settings from your provider dashboard. You need:
-
-- SMTP host
-- SMTP port
-- SMTP username
-- SMTP password
-- A sender email the provider allows
+- `VITE_API_BASE_URL` only if API is hosted on a different domain. Leave unset for same-project Vercel deploys.
 
 ## Contact API
 
-### `GET /health`
+Endpoint:
 
-Returns current backend status, including whether SMTP is configured.
+- `POST /api/contact`
 
-### `POST /api/contact`
-
-Request body:
+Body:
 
 ```json
 {
@@ -127,43 +77,23 @@ Request body:
 
 Notes:
 
-- `company` is a hidden honeypot field and should stay empty
-- The backend rate-limits repeated submissions
-- If SMTP credentials are missing, the endpoint returns `503`
-- When SMTP is configured, the backend sends two emails:
-  - A styled notification to `CONTACT_TO_EMAIL`
-  - A styled thank-you auto-reply to the sender
+- `company` is a honeypot field and must stay empty.
+- API includes basic validation and rate limiting.
+- When SMTP is configured, it sends:
+  - Notification email to `CONTACT_TO_EMAIL`
+  - Auto-reply to the sender
 
-## Deployment
+## Deploy to Vercel
 
-### Frontend deployment
+1. Push this repository to GitHub.
+2. Import the repo into Vercel.
+3. Add the environment variables above.
+4. Deploy.
 
-1. Add `VITE_API_BASE_URL` in your frontend host settings.
-2. Build the app:
+Your frontend and `/api/contact` route will be live in one deployment.
 
-```sh
-npm run build
-```
+## Security
 
-3. Deploy `dist` to Vercel, Netlify, or another static host.
-
-### Backend deployment
-
-1. Deploy the repository to Render, Railway, or another Node host.
-2. Set the backend environment variables listed above.
-3. Use the start command:
-
-```sh
-npm run server
-```
-
-4. Confirm `GET /health` reports the expected SMTP status.
-5. Update the frontend `VITE_API_BASE_URL` to the final backend URL.
-
-## Final checklist before deploying
-
-1. Run `npm install` so the cleaned dependency list is applied.
-2. Fill `.env` or host environment variables with real SMTP values.
-3. Test `POST /api/contact` locally.
-4. Build the frontend with `npm run build`.
-5. Deploy backend first, then frontend.
+- `.env` is ignored and should never be committed.
+- Use `.env.example` as the template for required keys.
+- If credentials were ever committed, rotate SMTP app passwords immediately.

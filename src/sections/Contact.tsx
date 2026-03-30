@@ -39,10 +39,13 @@ const Contact = () => {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    const configuredApiBase = String(import.meta.env.VITE_API_BASE_URL || '')
+      .trim()
+      .replace(/\/$/, '');
+    const contactEndpoint = configuredApiBase ? `${configuredApiBase}/api/contact` : '/api/contact';
 
     try {
-      const response = await fetch(`${apiBase}/api/contact`, {
+      const response = await fetch(contactEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,6 +68,11 @@ const Contact = () => {
       }, 5000);
     } catch (submitError) {
       setStatus('error');
+      if (submitError instanceof TypeError) {
+        setError('Cannot reach contact API. If testing locally, run `vercel dev` or deploy to Vercel and try again.');
+        return;
+      }
+
       setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
     }
   };
@@ -76,7 +84,7 @@ const Contact = () => {
           number="06"
           eyebrow="Contact"
           title="Contact"
-          description="Messages route through the backend so inquiries can reach your inbox properly."
+          description="Messages are delivered through a secure API route so inquiries reach your inbox reliably."
           className="mb-8 lg:mb-12"
         />
 
