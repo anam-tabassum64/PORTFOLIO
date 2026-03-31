@@ -289,6 +289,9 @@ const Footer = () => {
           position: relative;
           overflow: hidden;
           display: block;
+          width: fit-content;
+          margin-left: auto;
+          justify-self: end;
           text-decoration: none;
           transition: transform 300ms ease, opacity 300ms ease;
         }
@@ -313,16 +316,18 @@ const Footer = () => {
 
         .footer-timer-shell {
           position: relative;
-          padding: 4px 0 0;
+          padding: 2px 0 0;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
+          align-items: flex-end;
+          width: fit-content;
         }
 
         .footer-timer {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 12px;
+          gap: 8px;
         }
 
         .footer-time-group {
@@ -336,7 +341,7 @@ const Footer = () => {
           position: relative;
           width: 100%;
           min-width: 0;
-          padding: 4px 2px 10px;
+          padding: 2px 2px 8px;
           text-align: center;
           overflow: hidden;
           animation: footerFloat 4.6s ease-in-out infinite;
@@ -363,7 +368,7 @@ const Footer = () => {
         .footer-time-value {
           display: block;
           font-family: 'Manrope', sans-serif;
-          font-size: clamp(1.8rem, 3vw, 2.9rem);
+          font-size: clamp(1.2rem, 2vw, 2rem);
           font-weight: 700;
           line-height: 0.95;
           color: #2c1b11;
@@ -374,10 +379,10 @@ const Footer = () => {
         .footer-time-group:not(:last-child)::after {
           content: ':';
           position: absolute;
-          right: -11px;
-          top: 14%;
+          right: -8px;
+          top: 12%;
           font-family: 'Manrope', sans-serif;
-          font-size: 1.6rem;
+          font-size: 1.25rem;
           font-weight: 600;
           line-height: 1;
           color: rgba(138, 98, 56, 0.48);
@@ -385,11 +390,12 @@ const Footer = () => {
 
         .footer-timer-date {
           font-family: 'Manrope', sans-serif;
-          font-size: 11px;
+          font-size: 10px;
           font-weight: 500;
           color: rgba(90, 61, 36, 0.72);
-          letter-spacing: 0.22em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
+          text-align: right;
         }
 
         @keyframes footerFloat {
@@ -464,6 +470,10 @@ const Footer = () => {
           .footer-grid {
             grid-template-columns: 1fr 1fr;
           }
+
+          .footer-cta {
+            justify-self: end;
+          }
         }
 
         @media (max-width: 900px) {
@@ -482,6 +492,7 @@ const Footer = () => {
 
           .footer-timer-shell {
             padding: 0;
+            align-items: flex-start;
           }
 
           .footer-timer {

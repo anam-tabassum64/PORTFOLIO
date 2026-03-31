@@ -5,6 +5,18 @@
 @tailwind utilities;
 
 @layer base {
+  @keyframes loadingBar {
+    0% {
+      transform: translateX(-120%);
+    }
+    50% {
+      transform: translateX(110%);
+    }
+    100% {
+      transform: translateX(260%);
+    }
+  }
+
   :root {
     --background: 34 45% 97%;
     --foreground: 30 32% 18%;

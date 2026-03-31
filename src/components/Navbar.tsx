@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
 import { profile } from '@/content/portfolio';
@@ -27,6 +27,31 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('#about');
+
+  const handleNavClick = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!href.startsWith('#')) return;
+    event.preventDefault();
+
+    if (href === '#top') {
+      window.history.replaceState(null, '', href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveLink('#about');
+      setMobileOpen(false);
+      return;
+    }
+
+    const targetId = href.slice(1);
+    const section = document.getElementById(targetId);
+    if (!section) return;
+
+    const navHeight = document.querySelector('nav')?.getBoundingClientRect().height ?? 72;
+    const top = section.getBoundingClientRect().top + window.scrollY - navHeight - 14;
+
+    window.history.replaceState(null, '', href);
+    window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+    setActiveLink(href);
+    setMobileOpen(false);
+  };
 
   /* scroll → glass effect */
   useEffect(() => {
@@ -119,6 +144,7 @@ const Navbar = () => {
           {/* ── Logo ── */}
           <a
             href="#top"
+            onClick={handleNavClick('#top')}
             className="nav-brand"
             style={{
               textDecoration: 'none',
@@ -202,6 +228,7 @@ const Navbar = () => {
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={handleNavClick(link.href)}
                   style={{
                     position: 'relative',
                     padding: '6px 14px',
@@ -333,10 +360,10 @@ const Navbar = () => {
                   <motion.a
                     key={link.href}
                     href={link.href}
+                    onClick={handleNavClick(link.href)}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    onClick={() => setMobileOpen(false)}
                     style={{
                       padding: '12px 16px',
                       fontSize: '15px', fontWeight: 500,

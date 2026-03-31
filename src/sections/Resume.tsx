@@ -128,8 +128,6 @@ const Resume = () => {
               <div className="flex flex-wrap gap-2.5">
                 <Link
                   to="/resume-preview"
-                  target="_blank"
-                  rel="noreferrer"
                   className="inline-flex items-center gap-2 border border-olive-700 bg-olive-700 px-4 py-3 font-syne text-[9px] font-bold uppercase tracking-[.18em] text-[#f7f3ed] transition-[background,border-color] duration-500 hover:border-olive-500 hover:bg-olive-500 group-hover:border-olive-500 group-hover:bg-olive-500 sm:px-5 sm:tracking-[.2em]"
                 >
                   <Eye size={12} />

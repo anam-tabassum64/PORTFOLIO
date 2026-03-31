@@ -52,15 +52,15 @@ const About = () => {
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-olive-200/70 bg-white/45 p-6 transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(60,42,20,0.14)] lg:p-7">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-olive-500">
+            <div className="-mt-4 w-[88%] self-center rounded-[22px] border border-olive-200/70 bg-white/45 p-6 transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(60,42,20,0.14)] lg:-mt-3 lg:w-[84%] lg:p-8">
+              <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.24em] text-olive-500">
                 Hobbies & Interests
               </p>
-              <div className="mt-4 flex flex-wrap gap-2.5">
+              <div className="mt-3.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {hobbies.map((hobby) => (
                   <span
                     key={hobby}
-                    className="rounded-full border border-olive-300/55 bg-olive-50/75 px-3 py-1.5 text-[12px] font-medium text-olive-700 transition-all duration-500 hover:-translate-y-0.5 hover:border-olive-400 hover:bg-olive-100/70"
+                    className="rounded-full border border-olive-300/55 bg-olive-50/75 px-2.5 py-1.5 text-center text-[11px] font-medium text-olive-700 transition-all duration-500 last:col-span-2 hover:-translate-y-0.5 hover:border-olive-400 hover:bg-olive-100/70 sm:last:col-span-3"
                   >
                     {hobby}
                   </span>
