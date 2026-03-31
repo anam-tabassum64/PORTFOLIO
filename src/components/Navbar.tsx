@@ -27,6 +27,21 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('#about');
+  const homeHref = import.meta.env.BASE_URL || '/';
+
+  const handleBrandClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const onHomeRoute = window.location.pathname === homeHref || window.location.pathname === `${homeHref.replace(/\/$/, '')}`;
+    if (onHomeRoute) {
+      event.preventDefault();
+      window.history.replaceState(null, '', '#top');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveLink('#about');
+      setMobileOpen(false);
+      return;
+    }
+
+    window.location.assign(homeHref);
+  };
 
   const handleNavClick = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
     if (!href.startsWith('#')) return;
@@ -143,8 +158,8 @@ const Navbar = () => {
 
           {/* ── Logo ── */}
           <a
-            href="#top"
-            onClick={handleNavClick('#top')}
+            href={homeHref}
+            onClick={handleBrandClick}
             className="nav-brand"
             style={{
               textDecoration: 'none',

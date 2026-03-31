@@ -218,6 +218,7 @@ const ProjectRow = ({
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.85, ease: EASE_SMOOTH }}
+              style={{ transformOrigin: 'top center' }}
               className="relative z-10 overflow-hidden"
             >
               <div className="grid gap-8 px-5 py-8 sm:px-6 sm:py-9 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:py-12">
@@ -307,6 +308,9 @@ const Projects = () => {
   const handleHoverOpen = useCallback((index: number) => {
     setOpenIndex((prev) => (prev === index ? prev : index));
   }, []);
+  const handleToggleOpen = useCallback((index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  }, []);
 
   return (
     <section id="projects" className="overflow-hidden bg-white px-0 py-16 lg:py-24">
@@ -336,7 +340,7 @@ const Projects = () => {
               project={project}
               index={index}
               isOpen={openIndex === index}
-              onToggle={() => setOpenIndex(prev => prev === index ? null : index)}
+              onToggle={() => handleToggleOpen(index)}
               isAnyOpen={openIndex !== null}
               onHoverOpen={handleHoverOpen}
             />
