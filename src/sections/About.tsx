@@ -1,8 +1,10 @@
 import { profile } from '@/content/portfolio';
-import aboutMePhoto from '@/content/about-me.jpg';
+import aboutMePhoto from '@/content/about-me.png';
 import EditorialSectionHeader from '@/components/EditorialSectionHeader';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const About = () => {
+  const shouldReduceMotion = useReducedMotion();
   const name = profile?.name ?? 'Anam Tabassum';
   const photo = (profile as { photo?: string })?.photo ?? aboutMePhoto;
   const role = 'Software Development Engineer';
@@ -17,6 +19,35 @@ const About = () => {
     'Sketching',
     'Journaling',
   ];
+  const sectionEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+  const fadeUp = shouldReduceMotion
+    ? { initial: { opacity: 1, y: 0 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0 } }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.8, ease: sectionEase },
+      };
+  const staggerParent = shouldReduceMotion
+    ? {}
+    : {
+        initial: 'hidden',
+        whileInView: 'visible',
+        viewport: { once: true, amount: 0.2 },
+        variants: {
+          hidden: {},
+          visible: {
+            transition: { staggerChildren: 0.12, delayChildren: 0.08 },
+          },
+        },
+      };
+  const staggerItem = shouldReduceMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 14 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: sectionEase } },
+        },
+      };
 
   return (
     <section id="about" className="relative mt-2 overflow-hidden bg-transparent px-4 pb-12 pt-8 sm:px-6 lg:mt-4 lg:px-16 lg:pb-20 lg:pt-10 xl:px-24 xl:pb-24">
@@ -24,17 +55,27 @@ const About = () => {
       <div className="pointer-events-none absolute -right-24 bottom-8 h-64 w-64 rounded-full bg-olive-300/20 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-[86rem]">
-        <EditorialSectionHeader
+        <motion.div
+          initial={fadeUp.initial}
+          whileInView={fadeUp.whileInView}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={fadeUp.transition}
+        >
+          <EditorialSectionHeader
           number="01"
           eyebrow="About"
           title="About"
           description="Get to Know Me"
           className="-mt-2 mb-5 lg:-mt-4 lg:mb-8"
-        />
+          />
+        </motion.div>
 
-        <div className="grid items-start gap-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[330px_minmax(0,1fr)] xl:gap-10">
-          <div className="flex flex-col gap-6">
-            <div className="group relative overflow-hidden rounded-[30px] border border-olive-200/70 bg-white/45 p-2 shadow-[0_28px_60px_rgba(60,42,20,0.14)] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_36px_70px_rgba(60,42,20,0.2)]">
+        <motion.div
+          className="grid items-start gap-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[330px_minmax(0,1fr)] xl:gap-10"
+          {...staggerParent}
+        >
+          <motion.div className="flex flex-col gap-6" {...staggerItem}>
+            <div className="group relative overflow-hidden rounded-[30px] border border-olive-200/70 bg-white/45 p-2 shadow-[0_28px_60px_rgba(60,42,20,0.14)] transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_36px_70px_rgba(60,42,20,0.2)]">
               <div className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full bg-olive-200/35 blur-2xl" />
               <div className="pointer-events-none absolute -bottom-8 -left-6 h-28 w-28 rounded-full bg-olive-300/30 blur-2xl" />
 
@@ -42,17 +83,17 @@ const About = () => {
                 <img
                   src={photo}
                   alt={name}
-                  className="block h-full w-full object-cover object-[50%_18%] transition-transform duration-1000 group-hover:scale-[1.02]"
+                  className="block h-full w-full object-cover object-[50%_18%] transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
                 />
               </div>
 
-              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-olive-300/40 bg-[#302618eb] px-3 py-2 text-[12px] font-semibold tracking-[0.04em] text-[#f7f1e7] transition-all duration-700 group-hover:translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(40,30,18,0.28)] sm:bottom-6 sm:left-6 sm:px-4 sm:py-2.5 sm:text-[13px]">
+              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-olive-300/40 bg-[#302618eb] px-3 py-2 text-[12px] font-semibold tracking-[0.04em] text-[#f7f1e7] transition-all duration-700 ease-out group-hover:translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(40,30,18,0.28)] sm:bottom-6 sm:left-6 sm:px-4 sm:py-2.5 sm:text-[13px]">
                 <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#5fe26f] shadow-[0_0_0_6px_rgba(95,226,111,0.18)] animate-pulse" />
                 Open to Work
               </div>
             </div>
 
-            <div className="-mt-4 w-[88%] self-center rounded-[22px] border border-olive-200/70 bg-white/45 p-6 transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(60,42,20,0.14)] lg:-mt-3 lg:w-[84%] lg:p-8">
+            <div className="-mt-4 w-[88%] self-center rounded-[22px] border border-olive-200/70 bg-white/45 p-6 transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(60,42,20,0.14)] lg:-mt-3 lg:w-[84%] lg:p-8">
               <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.24em] text-olive-500">
                 Hobbies & Interests
               </p>
@@ -67,10 +108,10 @@ const About = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="w-full">
-            <div className="w-full rounded-[30px] border border-olive-200/75 bg-white/50 p-6 shadow-[0_18px_45px_rgba(60,42,20,0.1)] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_30px_65px_rgba(60,42,20,0.16)] lg:p-7">
+          <motion.div className="w-full" {...staggerItem}>
+            <div className="w-full rounded-[30px] border border-olive-200/75 bg-white/50 p-6 shadow-[0_18px_45px_rgba(60,42,20,0.1)] transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_30px_65px_rgba(60,42,20,0.16)] lg:p-7">
               <p className="text-sm font-medium text-olive-500">Hi there, I&apos;m</p>
               <h2 className="mt-1 font-serif text-[clamp(1.85rem,3.3vw,3.4rem)] font-semibold leading-[0.98] tracking-[-0.02em] text-olive-700">
                 {name}
@@ -89,19 +130,19 @@ const About = () => {
                 {profile.summary}
               </p>
 
-              <div className="mt-6 rounded-2xl border border-olive-200/70 bg-olive-50/70 p-5 transition-all duration-700 lg:p-6">
+              <div className="mt-6 rounded-2xl border border-olive-200/70 bg-olive-50/70 p-5 transition-all duration-700 ease-out lg:p-6">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-olive-500">
                   How I Add Value
                 </p>
                 <div className="mt-4 grid gap-4 lg:grid-cols-2">
-                  <article className="rounded-xl border border-olive-200/70 bg-white/55 p-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-olive-300 hover:bg-white/70">
+                  <article className="rounded-xl border border-olive-200/70 bg-white/55 p-4 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-olive-300 hover:bg-white/70">
                     <p className="font-serif text-lg font-semibold text-olive-700">Technical Skills</p>
                     <p className="mt-2 text-[15px] leading-relaxed text-olive-600">
                       Strong in backend API development, database design, and data-focused workflows, with hands-on
                       experience across Python, web engineering, and practical software development foundations.
                     </p>
                   </article>
-                  <article className="rounded-xl border border-olive-200/70 bg-white/55 p-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-olive-300 hover:bg-white/70">
+                  <article className="rounded-xl border border-olive-200/70 bg-white/55 p-4 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-olive-300 hover:bg-white/70">
                     <p className="font-serif text-lg font-semibold text-olive-700">Soft Skills</p>
                     <p className="mt-2 text-[15px] leading-relaxed text-olive-600">
                       I communicate clearly, work well in collaborative teams, learn quickly, and stay consistent with
@@ -112,8 +153,8 @@ const About = () => {
               </div>
             </div>
 
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

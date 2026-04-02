@@ -421,7 +421,7 @@ const Skills = () => {
                         <div
                           key={skill.n}
                           className={`skills-skill ${isActive ? 'reveal' : ''}`}
-                          style={{ transitionDelay: isActive ? `${skillIndex * 70}ms` : '0ms' }}
+                          style={{ transitionDelay: isActive ? `${skillIndex * 145}ms` : '0ms' }}
                         >
                           <div className="skills-skill-icon">{skill.ico}</div>
                           <div className="skills-skill-name">{skill.n}</div>
@@ -471,7 +471,7 @@ const Skills = () => {
           border-bottom:1px solid rgba(176,137,73,.14);
           opacity:0;
           transform:translateY(40px);
-          transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
+          transition:opacity 1.55s cubic-bezier(.22,1,.36,1),transform 1.55s cubic-bezier(.22,1,.36,1);
         }
         .skills-hero.on{opacity:1;transform:translateY(0);}
 
@@ -558,7 +558,7 @@ const Skills = () => {
         .skills-domain-panel{
           display:grid;
           grid-template-rows:0fr;
-          transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1);
+          transition:grid-template-rows 1.05s cubic-bezier(.22,1,.36,1);
         }
         .skills-domain.active .skills-domain-panel{grid-template-rows:1fr;}
         .skills-domain-inner{overflow:hidden;}
@@ -608,7 +608,7 @@ const Skills = () => {
           border-bottom:1px solid rgba(176,137,73,.08);
           opacity:0;
           transform:translateX(-18px);
-          transition:opacity .38s ease,transform .42s cubic-bezier(.34,1.2,.64,1),background .25s ease;
+          transition:opacity .78s ease,transform .95s cubic-bezier(.22,1,.36,1),background .5s ease;
           border-radius:6px;
         }
         .skills-skill:last-child{border-bottom:none;}
@@ -656,7 +656,7 @@ const Skills = () => {
           height:100%;
           border-radius:999px;
           background:linear-gradient(90deg,#b08949,#d4aa70);
-          transition:width .9s .15s cubic-bezier(.22,1,.36,1);
+          transition:width 1.7s .24s cubic-bezier(.22,1,.36,1);
         }
         .skills-skill-pct{
           font-family:'DM Mono',monospace;
@@ -678,7 +678,7 @@ const Skills = () => {
           border-top:1px solid rgba(176,137,73,.12);
           opacity:0;
           transform:translateY(16px);
-          transition:opacity .6s .2s cubic-bezier(.22,1,.36,1),transform .6s .2s cubic-bezier(.22,1,.36,1);
+          transition:opacity 1.15s .3s cubic-bezier(.22,1,.36,1),transform 1.15s .3s cubic-bezier(.22,1,.36,1);
         }
         .skills-foot.on{opacity:1;transform:translateY(0);}
         .skills-foot-left{display:flex;align-items:center;gap:9px;}
