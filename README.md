@@ -1,111 +1,152 @@
-<div align="center">
-<br/>
-```
-╔═══════════════════════════════════════════╗
-║          anam tabassum · portfolio        ║
-╚═══════════════════════════════════════════╝
-```
-A modern portfolio built with Vite · React · TypeScript · Tailwind CSS  
-Serverless contact delivery via Vercel — no backend required.
-<br/>
-![Deploy with Vercel](https://vercel.com/button)
-![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-</div>
+# 🌐 Portfolio Website
+
+Portfolio site for **Anam Tabassum** built with **React, TypeScript, Vite, Tailwind CSS**, and a **Vercel Serverless Function** for contact email delivery.
+
+🔗 Live Site: https://anamtabassum.vercel.app/
+
 ---
-Architecture
-```
-┌─────────────────────────────────────────────────┐
-│                  Vercel Project                 │
-│                                                 │
-│   ┌──────────────────┐   ┌───────────────────┐  │
-│   │   Frontend        │   │  Serverless API   │  │
-│   │                  │   │                   │  │
-│   │  Vite + React    │──▶│  /api/contact.js  │  │
-│   │  Static Build    │   │                   │  │
-│   └──────────────────┘   └────────┬──────────┘  │
-│                                   │             │
-└───────────────────────────────────┼─────────────┘
-                                    │
-                              ┌─────▼──────┐
-                              │  Nodemailer │
-                              │    SMTP     │
-                              └────────────┘
-```
-Single Vercel project. No separate backend service needed.
+
+## 🚀 Architecture
+
+- **Frontend:** Vite + React (static)
+- **Backend/API:** `api/contact.js` (Vercel Serverless Function)
+- **Email Service:** Nodemailer + SMTP
+
+✅ Deployed as a **single Vercel project**  
+❌ No separate backend (Render/Railway) required
+
 ---
-Getting Started
-1. Install dependencies
-```sh
+
+## ⚙️ Local Development
+
+### 1. Install dependencies
+```bash
 npm install
 ```
-2. Configure environment
-```sh
+
+### 2. Create environment file
+```bash
 copy .env.example .env
 ```
-3. Start the dev server
-```sh
+
+### 3. Start frontend
+```bash
 npm run dev
 ```
-4. Test serverless functions locally (optional)
-```sh
+
+### 4. Optional: Run serverless functions locally
+```bash
 npx vercel dev
 ```
+
 ---
-Environment Variables
-Set these in Vercel → Project Settings → Environment Variables.
-SMTP / Email
-Variable	Description	Example
-`SMTP_HOST`	SMTP server hostname	`smtp.gmail.com`
-`SMTP_PORT`	SMTP port	`587`
-`SMTP_SECURE`	`true` for SSL/465, `false` for STARTTLS/587	`false`
-`SMTP_USER`	SMTP username / email address	`you@gmail.com`
-`SMTP_PASS`	SMTP password or Gmail app password	`xxxx xxxx xxxx xxxx`
-`CONTACT_TO_EMAIL`	Where contact form submissions are sent	`inbox@yourdomain.com`
-`CONTACT_FROM_EMAIL`	Sender address for outgoing emails	`noreply@yourdomain.com`
-`ALLOW_DEV_CONTACT_FALLBACK`	Set to `false` in production	`false`
-Portfolio Metadata (optional)
-Variable	Description
-`PORTFOLIO_OWNER_NAME`	Displayed name
-`PORTFOLIO_OWNER_ROLE`	Role or title
-`PORTFOLIO_EMAIL`	Public contact email
-`PORTFOLIO_SITE_URL`	Production URL
-Frontend (optional)
-Variable	Description
-`VITE_API_BASE_URL`	Only needed if API is hosted on a different domain. Leave unset for same-project Vercel deploys.
+
+## 🔐 Environment Variables
+
+Set these in **Vercel → Project Settings → Environment Variables**
+
+### 📧 SMTP Configuration
+- `SMTP_HOST` → e.g. `smtp.gmail.com`
+- `SMTP_PORT` → `587` (or `465` for SSL)
+- `SMTP_SECURE` → `true` (465) / `false` (587)
+- `SMTP_USER`
+- `SMTP_PASS` → Use **App Password** (for Gmail)
+
+### 📩 Contact Settings
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+
+### ⚙️ Optional Settings
+- `ALLOW_DEV_CONTACT_FALLBACK` → `false` in production
+- `PORTFOLIO_OWNER_NAME`
+- `PORTFOLIO_OWNER_ROLE`
+- `PORTFOLIO_EMAIL`
+- `PORTFOLIO_SITE_URL`
+
+### 🌍 Frontend Variable (Optional)
+- `VITE_API_BASE_URL`  
+  ➤ Only needed if API is hosted separately  
+  ➤ Leave empty for same Vercel project
+
 ---
-Contact API
-Endpoint: `POST /api/contact`
+
+## 📬 Contact API
+
+### Endpoint
+```
+POST /api/contact
+```
+
+### Request Body
 ```json
 {
-  "name": "Your Name",
+  "name": "Your name",
   "email": "you@example.com",
   "message": "Tell me about your project"
 }
 ```
-What happens on submission:
-✉️ Notification email sent to `CONTACT_TO_EMAIL`
-🤖 Auto-reply sent to the sender
-🛡️ Basic validation and rate limiting applied
-> **Note:** The `company` field is a honeypot for bot detection — it must remain empty.
+
+### Notes
+- `company` field is a **honeypot** (must remain empty)
+- Includes:
+  - ✅ Basic validation  
+  - 🚫 Rate limiting  
+
+### Email Behavior
+- Sends **notification email** to `CONTACT_TO_EMAIL`
+- Sends **auto-reply** to the user
+
 ---
-Deploying to Vercel
-```
-1. Push this repo to GitHub
-2. Import the repo in vercel.com/new
-3. Add all environment variables
-4. Click Deploy
-```
-Your frontend and `/api/contact` will be live in a single deployment.
+
+## 🚀 Deploy to Vercel
+
+1. Push repository to GitHub
+2. Import project into Vercel
+3. Add environment variables
+4. Click **Deploy**
+
+🎉 Your site + API (`/api/contact`) will be live together
+
 ---
-Security
-`.env` is git-ignored and must never be committed
-Use `.env.example` as the reference template for required keys
-If credentials were ever committed, rotate your SMTP app password immediately
+
+## 🔒 Security
+
+- `.env` is ignored — **never commit it**
+- Use `.env.example` as a template
+- If credentials are exposed:
+  - 🔄 Rotate SMTP passwords immediately
+  - 🔐 Generate new App Passwords
+
 ---
-<div align="center">
-<br/>
-Designed & developed by Anam Tabassum
-</div>
+
+## 🛠 Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Nodemailer
+- Vercel Serverless Functions
+
+---
+
+## 📌 Features
+
+- 📱 Fully responsive design  
+- ⚡ Fast static frontend (Vite)  
+- 📩 Contact form with email integration  
+- 🛡 Built-in validation & spam protection  
+- ☁️ Serverless backend (no maintenance)
+
+---
+
+## ✨ Author
+
+**Anam Tabassum**  
+💻 Portfolio: https://anamtabassum.vercel.app/
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
