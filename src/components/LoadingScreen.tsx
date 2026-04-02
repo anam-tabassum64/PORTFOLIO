@@ -19,6 +19,13 @@ const CSS = `
 @keyframes at2-sep   { from { transform:scaleX(0) } to { transform:scaleX(1) } }
 @keyframes at2-fade  { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
 @keyframes at2-exit  { from{transform:scale(1);opacity:1} to{transform:scale(1.06);opacity:0} }
+@media (max-width: 700px) {
+  .at2-shell { padding: 0 16px; }
+  .at2-ring-wrap { transform: scale(0.82); margin-bottom: 12px !important; }
+  .at2-name { font-size: clamp(1.45rem, 9vw, 2.4rem) !important; }
+  .at2-separator { width: min(320px, calc(100vw - 40px)) !important; }
+  .at2-meta { font-size: 10px !important; letter-spacing: 0.18em !important; }
+}
 `;
 
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
@@ -79,10 +86,10 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           `,
         }} />
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2 }}>
+        <div className="at2-shell" style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2 }}>
 
           {/* ── Rings ── */}
-          <div style={{ position: "relative", width: 220, height: 220, marginBottom: 36 }}>
+          <div className="at2-ring-wrap" style={{ position: "relative", width: 220, height: 220, marginBottom: 36 }}>
 
             {/* Outer dashed */}
             <svg style={{ position:"absolute", inset:0, animation:"at2-spin 12s linear infinite" }} viewBox="0 0 220 220" fill="none">
@@ -135,7 +142,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
           {/* Name */}
           <div style={{ overflow:"hidden", width:"min(760px,calc(100vw - 32px))", textAlign:"center" }}>
-            <span style={{
+            <span className="at2-name" style={{
               display:"block",
               fontFamily:"'Playfair Display',serif",
               fontWeight:700,
@@ -151,14 +158,14 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           </div>
 
           {/* Separator */}
-          <div style={{
+          <div className="at2-separator" style={{
             width:"min(420px,calc(100vw - 48px))", height:1,
             background:"#1a1814", margin:"16px 0",
             transformOrigin:"left",
             animation:"at2-sep 1s cubic-bezier(.22,1,.36,1) .9s both",
           }}/>
 
-          <p style={{
+          <p className="at2-meta" style={{
             fontFamily:"'Space Mono',monospace",
             fontSize:12, letterSpacing:".24em", textTransform:"uppercase",
             color:"#8c8272", animation:"at2-fade .85s 1.1s ease both",

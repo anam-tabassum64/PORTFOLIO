@@ -98,6 +98,7 @@ const ProjectRow = ({
   onToggle,
   isAnyOpen,
   onHoverOpen,
+  allowHoverOpen,
 }: {
   project: (typeof projects)[0];
   index: number;
@@ -105,6 +106,7 @@ const ProjectRow = ({
   onToggle: () => void;
   isAnyOpen: boolean;
   onHoverOpen: (index: number) => void;
+  allowHoverOpen: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
@@ -118,7 +120,7 @@ const ProjectRow = ({
       transition={{ delay: index * 0.12, duration: 0.95, ease: EASE_SOFT }}
     >
       <motion.div
-        onMouseEnter={() => onHoverOpen(index)}
+        onMouseEnter={() => { if (allowHoverOpen) onHoverOpen(index); }}
         onFocus={() => onHoverOpen(index)}
         animate={{ opacity: isAnyOpen && !isOpen ? 0.35 : 1 }}
         transition={{
@@ -138,7 +140,7 @@ const ProjectRow = ({
         <motion.button
           onClick={onToggle}
           onMouseEnter={() => {
-            onHoverOpen(index);
+            if (allowHoverOpen) onHoverOpen(index);
             scramble();
           }}
           onMouseLeave={reset}
@@ -152,10 +154,10 @@ const ProjectRow = ({
             transition={{ duration: 0.7, ease: EASE_SOFT }}
           />
 
-          <div className="flex items-center gap-3 px-5 py-5 sm:px-6 lg:px-12 lg:py-6">
+          <div className="flex flex-wrap items-center gap-2 px-4 py-4 sm:gap-3 sm:px-6 sm:py-5 lg:flex-nowrap lg:px-12 lg:py-6">
             {/* Title */}
             <h3
-              className={`flex-1 font-['Playfair_Display',_serif] text-[clamp(1.62rem,3.35vw,2.45rem)] font-medium tracking-tight transition-colors duration-1000 ${
+              className={`min-w-0 basis-full font-['Playfair_Display',_serif] text-[clamp(1.2rem,7vw,2.45rem)] font-medium tracking-tight transition-colors duration-1000 sm:basis-auto sm:flex-1 ${
                 isOpen ? 'text-[#f7f3ed]' : 'text-olive-900 group-hover:text-olive-700'
               }`}
             >
@@ -164,7 +166,7 @@ const ProjectRow = ({
 
             {/* Period */}
             <span
-              className={`hidden w-32 shrink-0 text-right font-mono text-[11px] tracking-[0.15em] lg:block ${
+              className={`hidden shrink-0 text-right font-mono text-[10px] tracking-[0.15em] md:block md:w-24 lg:w-32 lg:text-[11px] ${
                 isOpen ? 'text-[#d2b893]' : 'text-olive-400'
               }`}
             >
@@ -172,7 +174,7 @@ const ProjectRow = ({
             </span>
 
             {/* Stack preview */}
-            <div className="hidden w-48 shrink-0 justify-end gap-1.5 lg:flex">
+            <div className="hidden w-44 shrink-0 justify-end gap-1.5 xl:flex">
               {project.stack.slice(0, 2).map((s) => (
                 <span
                   key={s}
@@ -221,7 +223,7 @@ const ProjectRow = ({
               style={{ transformOrigin: 'top center' }}
               className="relative z-10 overflow-hidden"
             >
-              <div className="grid gap-8 px-5 py-8 sm:px-6 sm:py-9 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:py-12">
+              <div className="grid gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-12 lg:gap-10 lg:px-12 lg:py-12">
                 {/* Left — summary + details */}
                 <div className="lg:col-span-5">
                   <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.25em] text-[#d2b893]">Overview</p>
@@ -262,12 +264,12 @@ const ProjectRow = ({
 
                 {/* Right — image + links */}
                 <div className="flex flex-col items-start justify-between gap-6 lg:col-span-3 lg:items-end">
-                  <div className="w-full max-w-[260px] rounded-[24px] border border-[#b4884b] bg-[#7f6b46] p-2 shadow-[0_16px_40px_rgba(40,28,14,0.34)] lg:max-w-[275px] lg:-translate-y-4">
+                  <div className="w-full max-w-[220px] rounded-[20px] border border-[#b4884b] bg-[#7f6b46] p-2 shadow-[0_16px_40px_rgba(40,28,14,0.34)] sm:max-w-[250px] lg:max-w-[275px] lg:-translate-y-4">
                     <div className="overflow-hidden rounded-[18px] border border-[#c7ac7a]">
                       <img
                         src={projectImageMap[project.title]}
                         alt={`${project.title} preview`}
-                        className="h-[150px] w-full object-cover md:h-[170px] lg:h-[182px]"
+                        className="h-[130px] w-full object-cover sm:h-[160px] lg:h-[182px]"
                         loading="lazy"
                       />
                     </div>
@@ -303,8 +305,18 @@ const ProjectRow = ({
 
 const Projects = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [allowHoverOpen, setAllowHoverOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' });
+
+  useEffect(() => {
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setAllowHoverOpen(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
   const handleHoverOpen = useCallback((index: number) => {
     setOpenIndex((prev) => (prev === index ? prev : index));
   }, []);
@@ -343,6 +355,7 @@ const Projects = () => {
               onToggle={() => handleToggleOpen(index)}
               isAnyOpen={openIndex !== null}
               onHoverOpen={handleHoverOpen}
+              allowHoverOpen={allowHoverOpen}
             />
           ))}
           <div className="border-t border-olive-100" />

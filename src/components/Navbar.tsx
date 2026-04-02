@@ -170,6 +170,7 @@ const Navbar = () => {
             }}
           >
             <span
+              className="nav-brand-logo"
               style={{
                 width: '38px',
                 height: '38px',
@@ -191,7 +192,7 @@ const Navbar = () => {
                 }}
               />
             </span>
-            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '10px', transform: 'translateY(1px)' }}>
+            <span className="nav-brand-text" style={{ display: 'inline-flex', alignItems: 'baseline', gap: '10px', transform: 'translateY(1px)' }}>
               <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '1px' }}>
                 <span
                   className="nav-brand-name"
@@ -398,7 +399,7 @@ const Navbar = () => {
               </div>
 
               {/* Mobile bottom row */}
-              <div style={{ display: 'flex', gap: '10px', paddingTop: '12px', borderTop: '1px solid rgba(197,168,118,0.2)' }}>
+              <div className="nav-mobile-actions" style={{ display: 'flex', gap: '10px', paddingTop: '12px', borderTop: '1px solid rgba(197,168,118,0.2)' }}>
                 <a
                   href={profile?.resumePath ?? '#'}
                   download
@@ -454,17 +455,30 @@ const Navbar = () => {
             padding: 0 12px !important;
             height: 62px !important;
           }
+          .nav-brand-logo {
+            width: 34px !important;
+            height: 34px !important;
+          }
           .nav-brand-name { font-size: 19px !important; }
+          .nav-brand-text { gap: 6px !important; }
           .nav-mobile-drawer {
             max-height: calc(100svh - 62px);
             overflow-y: auto;
+            padding: 16px 14px 20px !important;
           }
         }
         @media (max-width: 420px) {
           .nav-brand {
             gap: 7px !important;
           }
+          .nav-brand-logo {
+            width: 30px !important;
+            height: 30px !important;
+          }
           .nav-brand-name { font-size: 17px !important; }
+          .nav-mobile-actions {
+            flex-direction: column;
+          }
         }
         @media (min-width: 1101px) {
           .show-mobile { display: none !important; }
