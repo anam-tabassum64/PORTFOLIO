@@ -69,9 +69,7 @@ Body:
 {
   "name": "Your name",
   "email": "you@example.com",
-  "subject": "Project inquiry",
   "message": "Tell me about your project",
-  "company": ""
 }
 ```
 
